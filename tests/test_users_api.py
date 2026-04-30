@@ -10,23 +10,23 @@ headers = {
 '''
 
 # using parametrization
-@pytest.mark.parametrize("user_id", user_ids)
-def test_get_multiple_users(base_url, headers, user_id):
-    response = get_user(base_url, headers, user_id)
+@pytest.mark.parametrize("user_ids", user_ids)
+def test_get_multiple_users(base_url, headers, user_ids):
+    response = get_user(base_url, headers, user_ids)
     data = response.json()
 
     assert response.status_code == 200
-    assert data["data"]["id"] == user_id
+    assert data["data"]["id"] == user_ids
     
 
 # parametrize with expected values
-@pytest.mark.parametrize("user_id,expected_id", [
+@pytest.mark.parametrize("user_ids,expected_id", [
     (1, 1),
     (2, 2),
     (3, 3),
 ])
-def test_user_ids(base_url, headers, user_id, expected_id):
-    response = get_user(base_url, headers, user_id)
+def test_user_ids(base_url, headers, user_ids, expected_id):
+    response = get_user(base_url, headers, user_ids)
     data = response.json()
 
     assert response.status_code == 200
@@ -48,8 +48,8 @@ def test_create_user(base_url, headers):
     assert isinstance(data.get("id"), str)
 
 
-@pytest.mark.parametrize("user_id", [9999])
-def test_user_not_found(base_url, headers, user_id):
-    response = get_user(base_url, headers, user_id)
+@pytest.mark.parametrize("user_ids", [9999])
+def test_user_not_found(base_url, headers, user_ids):
+    response = get_user(base_url, headers, user_ids)
 
     assert response.status_code == 404

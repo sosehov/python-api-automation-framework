@@ -1,5 +1,9 @@
 import json
 
+# For API tests
+user_ids = [1, 2, 3]
+
+# For login tests
 json_data = '''
 [
     {"username": "admin", "password": "123", "expected": "login successful"},
@@ -8,5 +12,4 @@ json_data = '''
     {"username": "testuser", "password": "abc", "expected": "invalid credentials"}
 ]
 '''
-
-users = json.loads(json_data)
+login_test_data = json.loads(json_data)
