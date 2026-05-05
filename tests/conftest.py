@@ -1,9 +1,16 @@
+from dotenv import load_dotenv
+import os
 import pytest
+
+load_dotenv()
 
 @pytest.fixture(scope="session")
 def headers():
+  api_key = os.getenv("API_KEY")
+  assert api_key is not None, "API_KEY is not set"
+  
   return {
-    "x-api-key": "pub_df5264ffcb16458c69576063a787b925355301f0f0c61a9eaea89e1ea6c3eb44",
+    "x-api-key": api_key,
     "Content-Type": "application/json"
   }
 
