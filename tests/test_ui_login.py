@@ -1,21 +1,21 @@
-from playwright.sync_api import Page
-from playwright.sync_api import expect
+import pytest
+from utils.pages.login_page import LoginPage
 
 def test_login_success(page):
-  page.goto("https://the-internet.herokuapp.com/login")
+  login_page = LoginPage(page)
   
-  page.get_by_label("Username").fill("tomsmith")
-  page.get_by_label("Password").fill("SuperSecretPassword!")
+  login_page.navigate()
+  login_page.login("tomsmith", "SuperSecretPassword!")
+  login_page.assert_success
+
+@pytest.mark.parametrize("username, password", [
+  ("wronguser", "SuperSecretPassword!"),
+  ("tomsmith", "wrongpass"),
+  ])
+def test_login_failure(page, username, password):
+  login_page = LoginPage(page)
   
-  page.get_by_role("button", name="Login").click()
+  login_page.navigate()
+  login_page.login(username, password)
   
-  
-  expect(page).not_to_have_title("Application error")
-  
-  success_message = page.locator("#flash")
-  
-  #assert success_message.is_visible()
-  #assert "You logged into a secure area!" in success_message.inner_text()
-  
-  expect(success_message).to_be_visible()
-  expect(success_message).to_contain_text("You logged into a secure area!")
+  login_page.assert_error
