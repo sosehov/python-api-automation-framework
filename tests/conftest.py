@@ -1,8 +1,6 @@
-from dotenv import load_dotenv
 import os
 import pytest
-
-load_dotenv()
+from config.config import BASE_URL_API
 
 @pytest.fixture(scope="session")
 def headers():
@@ -16,7 +14,7 @@ def headers():
 
 @pytest.fixture(scope="session")
 def base_url():
-  return "https://reqres.in/api"
+  return BASE_URL_API
 
 @pytest.fixture(scope="session", autouse=True)
 def setup_environment():
