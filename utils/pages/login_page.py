@@ -1,4 +1,5 @@
 from playwright.sync_api import expect
+from config.config import BASE_URL_UI
 
 class LoginPage:
   def __init__(self, page):
@@ -9,7 +10,7 @@ class LoginPage:
     self.flash_message = page.locator("#flash")
     
   def navigate(self):
-    self.page.goto("https://the-internet.herokuapp.com/login")
+    self.page.goto(f"{BASE_URL_UI}/login")
     
   def login(self, username, password):
     self.username_input.fill(username)
