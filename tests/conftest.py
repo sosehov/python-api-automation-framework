@@ -1,14 +1,13 @@
 import os
 import pytest
-from config.config import BASE_URL_API
+from config.config import BASE_URL_API, API_KEY
 
 @pytest.fixture(scope="session")
 def headers():
-  api_key = os.getenv("API_KEY")
-  assert api_key is not None, "API_KEY is not set"
+  assert API_KEY is not None, "API_KEY is not set"
   
   return {
-    "x-api-key": api_key,
+    "x-api-key": API_KEY,
     "Content-Type": "application/json"
   }
 
